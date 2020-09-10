@@ -1,6 +1,6 @@
 // import { Schema, Model } from 'mongoose';
 // 02331479
-import Mongoose, { MongooseDocument } from 'mongoose';
+import Mongoose from 'mongoose';
 const UsuarioSchema = new Mongoose.Schema({
     nombre :{
         type: String,

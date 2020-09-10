@@ -2,7 +2,7 @@
  * Ruta : /api/usuarios
  */
 import exp from 'express';
-import checkAPIs from 'express-validator/check';
+import checkAPIs from 'express-validator';
 
 import { getUsers, saveUser } from '../controllers/usuarios';
 import { validarCampos } from '../middlewares/validar-campos';

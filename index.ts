@@ -25,7 +25,7 @@ app.use( exp.json() );
 dbConection();
 
 // Rutas
-app.use('/api/users',  userRouter);
+app.use('/api/usuarios',  userRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor correndo en puerto : ${ process.env.PORT }`);

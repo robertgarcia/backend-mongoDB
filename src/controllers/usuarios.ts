@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
+import bycryptjs from 'bcryptjs';
+
 import { Usuario } from '../models/usuario';
+
+const { hashSync, genSaltSync } = bycryptjs;
 
 const getUsers = async (req: Request, res: Response) => {
     try {
@@ -16,15 +20,19 @@ const getUsers = async (req: Request, res: Response) => {
 
 const saveUser = async (req: Request, res: Response) => {
     try {
-        const { email, pasword, nombre } = req.body;
+        const { email, password } = req.body;
         const existe = await Usuario.findOne({ email });
 
-        if (existe) {
+        if ( existe ) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Ya existe un usuario con ese correo.'
             });
         }
+
+        // Encriptar contraseña
+        const salt = genSaltSync();
+        req.body.password = hashSync(password, salt);
 
         const user = new Usuario( req.body );
         await user.save();

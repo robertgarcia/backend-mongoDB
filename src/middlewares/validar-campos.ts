@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import checkAPIs from 'express-validator/check';
+import checkAPIs from 'express-validator';
 const { validationResult } = checkAPIs;
 const validarCampos = (req: Request, res: Response, next: NextFunction) => {
     const errExpress = validationResult(req);
