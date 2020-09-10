@@ -1,6 +1,5 @@
-// import { Schema, Model } from 'mongoose';
-// 02331479
 import Mongoose from 'mongoose';
+
 const UsuarioSchema = new Mongoose.Schema({
     nombre :{
         type: String,
@@ -26,11 +25,15 @@ const UsuarioSchema = new Mongoose.Schema({
     google:{
         type: Boolean,
         default: false,
+    },
+    estado: {
+        type: Boolean,
+        default: true
     }
 });
 
 UsuarioSchema.method('toJSON', function(){
-    const { __v, _id, ...object } = this.toObject();
+    const { __v, _id, password, ...object } = this.toObject();
     object.uid = _id;
     return object;
 });

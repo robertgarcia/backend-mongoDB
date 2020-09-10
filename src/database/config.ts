@@ -6,17 +6,18 @@ const dbConection = async () => {
         await mongoose.connect(process.env.DB_CNN, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         });
-        mongoose.connection.on('connected', () => {
+        await mongoose.connection.on('connected', () => {
             console.log("Mongoose default connection is open to ", process.env.DB_CNN);
         });
 
-        mongoose.connection.on('error', (err) =>  {
+        await mongoose.connection.on('error', (err) =>  {
             console.log("Mongoose default connection has occured "+err+" error");
         });
 
-        mongoose.connection.on('disconnected', () => {
+        await mongoose.connection.on('disconnected', () => {
             console.log("Mongoose default connection is disconnected");
         });
 

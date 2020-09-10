@@ -11,6 +11,7 @@ import { dbConection }  from './src/database/config';
 
 // Rutas
 import { userRouter } from './src/routes/usuarios';
+import { loginRouter } from './src/routes/auth';
 
 const app = exp();
 const cors = corsx();
@@ -26,6 +27,7 @@ dbConection();
 
 // Rutas
 app.use('/api/usuarios',  userRouter);
+app.use('/api/login',  loginRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor correndo en puerto : ${ process.env.PORT }`);
