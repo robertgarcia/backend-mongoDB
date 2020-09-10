@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "esnext",
+        "target": "es2020",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "target": "es6",
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
+        "strict": false,
         "outDir": "bin",
         "baseUrl": ".",
         "paths": {

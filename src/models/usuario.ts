@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose';
-
-const UsuarioSchema = new Schema({
+// import { Schema, Model } from 'mongoose';
+// 02331479
+import Mongoose, { MongooseDocument } from 'mongoose';
+const UsuarioSchema = new Mongoose.Schema({
     nombre :{
         type: String,
         required: true
@@ -28,4 +29,11 @@ const UsuarioSchema = new Schema({
     }
 });
 
-export = model('Usuario', UsuarioSchema);
+UsuarioSchema.method('toJSON', function(){
+    const { __v, _id, ...object } = this.toObject();
+    object.uid = _id;
+    return object;
+});
+
+const Usuario = Mongoose.model('Usuario', UsuarioSchema);
+export { Usuario }

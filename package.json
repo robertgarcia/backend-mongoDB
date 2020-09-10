@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "backend",
   "version": "1.0.0",
   "description": "",
@@ -7,19 +8,20 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node --experimental-modules .",
-    "start:dev": "nodemon",
+    "start": "node --experimental-specifier-resolution=node bin/index.js",
+    "start:dev": "tsc && concurrently \"tsc -w\" \"nodemon --experimental-specifier-resolution=node bin/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
     "ignore": [
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    ".git",
-    "node_modules"
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
     ],
     "watch": [
-    "src"
+      "src",
+      "index.ts"
     ],
     "exec": "npm start",
     "ext": "ts"
@@ -31,11 +33,13 @@
     "@types/cors": "^2.8.7",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.8",
+    "@types/express-validator": "^3.0.0",
     "@types/mongoose": "^5.7.36",
     "@types/node": "^14.6.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.6.1",
     "mongoose": "^5.10.1",
     "typescript": "^4.0.2"
   },
