@@ -13,7 +13,8 @@ const getUsers = async (req: Request, res: Response) => {
         const users = await Usuario.find(query, 'nombre email role google estado');
         res.json({
             ok: true,
-            users
+            users,
+            uid : req.uid
         })
     } catch (err) {
         res.status(500).json({
