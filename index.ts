@@ -11,6 +11,8 @@ import { dbConection }  from './src/database/config';
 
 // Rutas
 import { userRouter } from './src/routes/usuarios';
+import { hospitalRouter } from './src/routes/hospitales';
+import { medicoRouter } from './src/routes/medicos';
 import { loginRouter } from './src/routes/auth';
 
 const app = exp();
@@ -27,6 +29,8 @@ dbConection();
 
 // Rutas
 app.use('/api/usuarios',  userRouter);
+app.use('/api/hospitales',  hospitalRouter);
+app.use('/api/medicos',  medicoRouter);
 app.use('/api/login',  loginRouter);
 
 app.listen(process.env.PORT, () => {

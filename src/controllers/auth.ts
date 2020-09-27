@@ -15,7 +15,7 @@ const login = async ( req: Request, res: Response ) => {
         if ( !userDB ) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Credenciales Incorrectas'
+                msg: 'Credenciales Incorrectas / Usuario no encontrado'
             });
         }
 
@@ -23,7 +23,7 @@ const login = async ( req: Request, res: Response ) => {
         if ( !validPassword ) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Credenciales Incorrectas'
+                msg: 'Credenciales Incorrectas / Contraseña no valida'
             });
         }
 
