@@ -1,13 +1,9 @@
 import { Request, Response } from 'express';
-import bycryptjs from 'bcryptjs';
-
-import { generarJWT } from '../helpers/jwt';
-import { Medico } from '../models/medico';
-
-const { hashSync, genSaltSync } = bycryptjs;
+import { Medico } from '../models/';
+import { IMedico } from '../interfaces';
 const getMedicos = async (req: Request, res: Response) => {
     try {
-        const medicos = await Medico.find({}, 'nombre img usuario');
+        const medicos = await Medico.find().populate('usuario', 'nombre img').populate('hospital' , 'nombre img');
         res.json({
             ok : true,
             medicos
@@ -22,10 +18,20 @@ const getMedicos = async (req: Request, res: Response) => {
 
 const saveMedico = async (req: Request, res: Response) => {
     try {
+        const usuario = req.uid;
+        const medico = new Medico({
+            usuario,
+            ...req.body
+        });
+
+        const medicoDB = await medico.save();
+
         res.json({
-            ok  : true,
-            mgs : "saveMedico"
-        })
+            ok     : true,
+            medico : medicoDB,
+            mgs    : 'Medico creado correctamente'
+        });
+
     } catch (err) {
         res.status(500).json({
             ok  : false,

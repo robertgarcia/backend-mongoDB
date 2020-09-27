@@ -2,19 +2,21 @@ import Mongoose from 'mongoose';
 
 const MedicoSchema = new Mongoose.Schema({
     nombre :{
-        type: String,
-        required: true
+        type     : String,
+        required : true
     },
     img: {
         type: String
     },
     usuario: {
-        type: Mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario'
+        type     : Mongoose.Schema.Types.ObjectId,
+        ref      : 'Usuario',
+        required : true
     },
     hospital: {
-        type: Mongoose.Schema.Types.ObjectId,
-        ref: 'Hospital'
+        type     : Mongoose.Schema.Types.ObjectId,
+        ref      : 'Hospital',
+        required : true
     }
 }, {
     collection: 'medicos'

@@ -5,7 +5,7 @@ import exp from 'express';
 import checkAPIs from 'express-validator';
 
 import { login } from '../controllers/auth'
-import { validarCampos } from '../middlewares/validar-campos';
+import { validarCampos } from '../middlewares/';
 
 const loginRouter = exp.Router();
 const { check } = checkAPIs;

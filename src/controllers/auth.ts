@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bycryptjs from 'bcryptjs';
 
-import { Usuario } from '../models/usuario';
+import { Usuario } from '../models/';
 import { IUsuario } from '../interfaces/usuario';
 import { generarJWT } from '../helpers/jwt';
 

@@ -5,8 +5,7 @@ import exp from 'express';
 import checkAPIs from 'express-validator';
 
 import { getUsers, saveUser, updateUser, deleteUser } from '../controllers/usuarios';
-import { validarCampos } from '../middlewares/validar-campos';
-import { validarJWT } from '../middlewares/validar-jwt';
+import { validarCampos, validarJWT } from '../middlewares/';
 
 const userRouter = exp.Router();
 const { check } = checkAPIs;

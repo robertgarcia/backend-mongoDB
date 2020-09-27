@@ -2,19 +2,26 @@ import { Request, Response } from 'express';
 import bycryptjs from 'bcryptjs';
 
 import { generarJWT } from '../helpers/jwt';
-import { Usuario } from '../models/usuario';
-import { IUsuario } from '../interfaces/usuario';
+import { Usuario } from '../models/';
+import { IUsuario } from '../interfaces/';
 
 const { hashSync, genSaltSync } = bycryptjs;
 
 const getUsers = async (req: Request, res: Response) => {
     try {
+        const desde = Number(req.query.desde) || 0;
         const query = { estado: true };
-        const users = await Usuario.find(query, 'nombre email role google estado');
+
+        const [ users, total ] = await Promise.all([
+            Usuario.find(query, 'nombre email role google estado').skip(desde).limit(5),
+            Usuario.count({})
+        ]);
+
         res.json({
-            ok: true,
+            ok    : true,
             users,
-            uid : req.uid
+            uid   : req.uid,
+            total
         })
     } catch (err) {
         res.status(500).json({

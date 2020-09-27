@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
-import bycryptjs from 'bcryptjs';
 
-import { generarJWT } from '../helpers/jwt';
-import { Hospital } from '../models/hospital';
+import { Hospital } from '../models/';
+import { IHospital } from '../interfaces';
 
-const { hashSync, genSaltSync } = bycryptjs;
 const getHospitales = async (req: Request, res: Response) => {
     try {
-        const hospitales = await Hospital.find({}, 'nombre img usuario');
+        const hospitales = await Hospital.find().populate('usuario', 'nombre img');
         res.json({
             ok : true,
             hospitales
@@ -22,10 +20,20 @@ const getHospitales = async (req: Request, res: Response) => {
 
 const saveHospital = async (req: Request, res: Response) => {
     try {
+        const usuario = req.uid;
+        const hospital = new Hospital({
+            usuario,
+            ...req.body
+        });
+
+        const hospitalDB = await hospital.save();
+
         res.json({
-            ok  : true,
-            mgs : "saveHospitales"
-        })
+            ok       : true,
+            hospital : hospitalDB,
+            mgs      : 'El hospital se creo correctamente'
+        });
+
     } catch (err) {
         res.status(500).json({
             ok  : false,

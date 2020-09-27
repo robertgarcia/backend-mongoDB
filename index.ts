@@ -10,10 +10,7 @@ dot.config();
 import { dbConection }  from './src/database/config';
 
 // Rutas
-import { userRouter } from './src/routes/usuarios';
-import { hospitalRouter } from './src/routes/hospitales';
-import { medicoRouter } from './src/routes/medicos';
-import { loginRouter } from './src/routes/auth';
+import { userRouter, hospitalRouter, medicoRouter, busquedaRouter, loginRouter } from './src/routes/';
 
 const app = exp();
 const cors = corsx();
@@ -31,6 +28,7 @@ dbConection();
 app.use('/api/usuarios',  userRouter);
 app.use('/api/hospitales',  hospitalRouter);
 app.use('/api/medicos',  medicoRouter);
+app.use('/api/todo',  busquedaRouter);
 app.use('/api/login',  loginRouter);
 
 app.listen(process.env.PORT, () => {

@@ -10,7 +10,8 @@ const HospitalSchema = new Mongoose.Schema({
     },
     usuario: {
         type: Mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
+        required : true
     }
 }, {
     collection: 'hospitales'
