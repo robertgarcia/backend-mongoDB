@@ -10,7 +10,7 @@ dot.config();
 import { dbConection }  from './src/database/config';
 
 // Rutas
-import { userRouter, hospitalRouter, medicoRouter, busquedaRouter, loginRouter } from './src/routes/';
+import { userRouter, hospitalRouter, medicoRouter, busquedaRouter, loginRouter, uploadRouter } from './src/routes/';
 
 const app = exp();
 const cors = corsx();
@@ -30,6 +30,7 @@ app.use('/api/hospitales',  hospitalRouter);
 app.use('/api/medicos',  medicoRouter);
 app.use('/api/todo',  busquedaRouter);
 app.use('/api/login',  loginRouter);
+app.use('/api/upload',  uploadRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor correndo en puerto : ${ process.env.PORT }`);
