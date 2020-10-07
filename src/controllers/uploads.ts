@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import { v4 } from 'uuid';
+
+import { updateImg } from '../helpers/files';
 // import { Usuario, Medico, Hospital } from '../models';
 
 const fileUpload = async (req: Request, res: Response) => {
@@ -35,9 +39,9 @@ const fileUpload = async (req: Request, res: Response) => {
         }
 
         const fileName = `${ v4() }.${ fileExt }`;
-        const path = `./uploads/${ tipo }/${ fileName }`;
+        const pathFile = `./uploads/${ tipo }/${ fileName }`;
 
-        file.mv( path, (err) => {
+        file.mv( pathFile, (err) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -45,6 +49,8 @@ const fileUpload = async (req: Request, res: Response) => {
                     msg : 'Error al mover la imagen'
                 });
             }
+
+            updateImg( tipo, id, fileName );
 
             res.json({
                 ok      : true,
@@ -63,4 +69,21 @@ const fileUpload = async (req: Request, res: Response) => {
     }
 };
 
-export { fileUpload };
+const getImg = ( req:Request, res: Response ) => {
+    const dirName2 = fs.realpathSync('.');
+    // const dirName2 = process.cwd();
+    // const dirName2 = path.resolve();
+    // const dirName2 = path.resolve(path.dirname(''));
+    const tipo = req.params.tipo;
+    const foto = req.params.foto;
+    const pathImg = path.join( `${ dirName2 }`, `uploads/${ tipo }/${ foto }` );
+
+    if ( fs.existsSync( pathImg ) ){
+        res.sendFile( pathImg );
+    } else {
+        res.sendFile( path.join( `${ dirName2 }`, `uploads/no-img.jpg` ) );
+    }
+
+}
+
+export { fileUpload, getImg };
