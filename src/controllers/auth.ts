@@ -4,6 +4,7 @@ import bycryptjs from 'bcryptjs';
 import { Usuario } from '../models/';
 import { IUsuario } from '../interfaces/usuario';
 import { generarJWT } from '../helpers/jwt';
+import { googleVerify } from '../helpers/google-verify';
 
 const { compareSync } = bycryptjs;
 
@@ -42,4 +43,24 @@ const login = async ( req: Request, res: Response ) => {
     }
 }
 
-export { login };
+const loginGoogle = async ( req: Request, res: Response ) => {
+    try {
+        const googleToken = req.body.token;
+
+        const { name, email, picture } = await googleVerify( googleToken );
+
+        res.json({
+            ok: true,
+            msg: 'Google SingIn',
+            name, email, picture
+        });
+
+    } catch (err) {
+        res.status(401).json({
+            ok: false,
+            msg: err
+        });
+    }
+}
+
+export { login, loginGoogle };

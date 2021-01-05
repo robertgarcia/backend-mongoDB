@@ -4,7 +4,7 @@
 import exp from 'express';
 import checkAPIs from 'express-validator';
 
-import { login } from '../controllers/auth'
+import { login, loginGoogle } from '../controllers/auth'
 import { validarCampos } from '../middlewares/';
 
 const loginRouter = exp.Router();
@@ -15,5 +15,10 @@ loginRouter.post('/', [
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validarCampos
 ], login );
+
+loginRouter.post('/google', [
+    check('token', 'El token de Google es obligatorio').not().isEmpty(),
+    validarCampos
+], loginGoogle );
 
 export { loginRouter };

@@ -21,8 +21,12 @@ app.use( cors );
 // Parseamos el body
 app.use( exp.json() );
 
+// Direcctorio Publico
+app.use( exp.static('public') );
+
 // Conexion a Base de datos
 dbConection();
+
 
 // Rutas
 app.use('/api/usuarios',  userRouter);
