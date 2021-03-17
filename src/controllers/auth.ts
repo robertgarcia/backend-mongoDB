@@ -44,18 +44,45 @@ const login = async ( req: Request, res: Response ) => {
 }
 
 const loginGoogle = async ( req: Request, res: Response ) => {
+
     try {
         const googleToken = req.body.token;
 
         const { name, email, picture } = await googleVerify( googleToken );
+        const usuarioDB = await Usuario.findOne( { email } );
+
+        let usuario:any;
+
+        if ( !usuarioDB ) {
+            // Si no existe el usuario
+            usuario = new Usuario({
+                nombre : name,
+                email,
+                password : '@@@',
+                img : picture,
+                google : true
+            });
+        } else {
+            // existe usuario
+            usuario = usuarioDB;
+            usuario.google = true;
+            // usuario.password = '@@@';
+        }
+
+        // Guardar en DB
+        await usuario.save();
+
+        // Generar el TOKEN - JWT
+        const token = await generarJWT( usuarioDB._id );
 
         res.json({
             ok: true,
             msg: 'Google SingIn',
-            name, email, picture
+            token
         });
 
     } catch (err) {
+        console.log(err);
         res.status(401).json({
             ok: false,
             msg: err
