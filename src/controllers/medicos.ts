@@ -42,10 +42,30 @@ const saveMedico = async (req: Request, res: Response) => {
 
 const updateMedico = async (req: Request, res: Response) => {
     try {
+        const id = req.params.id;
+        const uid = req.uid;
+
+        const medicoDB = await Medico.findById( id );
+
+        if ( !medicoDB ) {
+            return res.status(404).json({
+                ok  : false,
+                mgs : "No se encontro un Medico con ese ID"
+            })
+        }
+
+        const dataMedico = {
+            ...req.body,
+            usuario: uid
+        }
+
+        const updateData = await Medico.findByIdAndUpdate( id, dataMedico, { new: true } );
+
         res.json({
             ok  : true,
-            mgs : "updateMedico"
-        })
+            hospital : updateData
+        });
+
     } catch (err) {
         res.status(500).json({
             ok  : false,
@@ -56,10 +76,23 @@ const updateMedico = async (req: Request, res: Response) => {
 
 const deleteMedico = async (req: Request, res: Response) => {
     try {
+        const id = req.params.id;
+
+        const medicoDB = await Medico.findById( id );
+
+        if ( !medicoDB ) {
+            return res.status(404).json({
+                ok  : false,
+                mgs : "No se encontro un Hospital con ese ID"
+            })
+        }
+
+        const deleteData = await Medico.findByIdAndDelete( id );
+
         res.json({
             ok  : true,
-            mgs : "deleteMedico"
-        })
+            hospital : deleteData
+        });
     } catch (err) {
         res.status(500).json({
             ok  : false,

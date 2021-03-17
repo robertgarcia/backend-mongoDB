@@ -20,7 +20,13 @@ medicoRouter.post( '/', [
     check('hospital', 'El hospital ID debe ser valido').isMongoId(),
     validarCampos
 ], saveMedico );
-medicoRouter.put( '/:id', [], updateMedico );
+medicoRouter.put( '/:id', [
+    validarJWT,
+    check('nombre', 'El nombre del medico es requerido').not().isEmpty(),
+    check('hospital', 'El hospital es requerido').not().isEmpty(),
+    check('hospital', 'El hospital ID debe ser valido').isMongoId(),
+    validarCampos
+], updateMedico );
 medicoRouter.delete( '/:id' , deleteMedico );
 
 export { medicoRouter };

@@ -23,6 +23,6 @@ hospitalRouter.put( '/:id', [
     check('nombre', 'El nombre del hospital es requerido').not().isEmpty(),
     validarCampos
 ], updateHospital );
-hospitalRouter.delete( '/:id' , deleteHospital );
+hospitalRouter.delete( '/:id', validarJWT , deleteHospital );
 
 export { hospitalRouter };

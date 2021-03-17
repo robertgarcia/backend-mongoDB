@@ -78,10 +78,23 @@ const updateHospital = async (req: Request, res: Response) => {
 
 const deleteHospital = async (req: Request, res: Response) => {
     try {
+        const id = req.params.id;
+
+        const hospitalDB = await Hospital.findById( id );
+
+        if ( !hospitalDB ) {
+            return res.status(404).json({
+                ok  : false,
+                mgs : "No se encontro un Hospital con ese ID"
+            })
+        }
+
+        const deleteData = await Hospital.findByIdAndDelete( id );
+
         res.json({
             ok  : true,
-            mgs : "deleteHospitales"
-        })
+            hospital : deleteData
+        });
     } catch (err) {
         res.status(500).json({
             ok  : false,
