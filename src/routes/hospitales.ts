@@ -18,7 +18,11 @@ hospitalRouter.post( '/', [
     check('nombre', 'El nombre del hospital es requerido').not().isEmpty(),
     validarCampos
     ], saveHospital );
-hospitalRouter.put( '/:id', [], updateHospital );
+hospitalRouter.put( '/:id', [
+    validarJWT,
+    check('nombre', 'El nombre del hospital es requerido').not().isEmpty(),
+    validarCampos
+], updateHospital );
 hospitalRouter.delete( '/:id' , deleteHospital );
 
 export { hospitalRouter };

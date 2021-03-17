@@ -44,10 +44,30 @@ const saveHospital = async (req: Request, res: Response) => {
 
 const updateHospital = async (req: Request, res: Response) => {
     try {
+        const id = req.params.id;
+        const uid = req.uid;
+
+        const hospitalDB = await Hospital.findById( id );
+
+        if ( !hospitalDB ) {
+            return res.status(404).json({
+                ok  : false,
+                mgs : "No se encontro un Hospital con ese ID"
+            })
+        }
+
+        const dataHospital = {
+            ...req.body,
+            usuario: uid
+        }
+
+        const updateData = await Hospital.findByIdAndUpdate( id, dataHospital, { new: true } );
+
         res.json({
             ok  : true,
-            mgs : "updateHospitales"
-        })
+            hospital : updateData
+        });
+
     } catch (err) {
         res.status(500).json({
             ok  : false,

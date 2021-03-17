@@ -4,8 +4,8 @@
 import exp from 'express';
 import checkAPIs from 'express-validator';
 
-import { login, loginGoogle } from '../controllers/auth'
-import { validarCampos } from '../middlewares/';
+import { login, loginGoogle, renewToken } from '../controllers/auth'
+import { validarCampos, validarJWT } from '../middlewares/';
 
 const loginRouter = exp.Router();
 const { check } = checkAPIs;
@@ -20,5 +20,7 @@ loginRouter.post('/google', [
     check('token', 'El token de Google es obligatorio').not().isEmpty(),
     validarCampos
 ], loginGoogle );
+
+loginRouter.get( '/renew', validarJWT, renewToken );
 
 export { loginRouter };

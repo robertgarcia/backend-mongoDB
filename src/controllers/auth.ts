@@ -73,7 +73,7 @@ const loginGoogle = async ( req: Request, res: Response ) => {
         await usuario.save();
 
         // Generar el TOKEN - JWT
-        const token = await generarJWT( usuarioDB._id );
+        const token = await generarJWT( usuario._id );
 
         res.json({
             ok: true,
@@ -90,4 +90,17 @@ const loginGoogle = async ( req: Request, res: Response ) => {
     }
 }
 
-export { login, loginGoogle };
+const renewToken = async ( req: Request, res: Response ) => {
+    // Obteneos el ID
+    const uid = req.uid;
+
+    // Generar el TOKEN - JWT
+    const token = await generarJWT( uid );
+
+    res.json({
+        ok : true,
+        token
+    })
+}
+
+export { login, loginGoogle, renewToken };
